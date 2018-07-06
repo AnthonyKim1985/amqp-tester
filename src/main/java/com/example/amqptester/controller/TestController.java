@@ -1,6 +1,5 @@
 package com.example.amqptester.controller;
 
-import com.example.amqptester.config.RabbitMQConfig;
 import com.example.amqptester.domain.DefaultResponse;
 import com.example.amqptester.domain.Employee;
 import com.example.amqptester.domain.Member;
@@ -24,14 +23,14 @@ public class TestController {
     @PostMapping("employee")
     @ResponseBody
     public DefaultResponse employee(@RequestBody Employee employee) {
-        rabbitTemplate.convertAndSend(RabbitMQConfig.QueueName, employee);
+        rabbitTemplate.convertAndSend("employee", employee);
         return new DefaultResponse(employee.toString());
     }
 
     @PostMapping("member")
     @ResponseBody
     public DefaultResponse member(@RequestBody Member member) {
-        rabbitTemplate.convertAndSend(RabbitMQConfig.SecondaryQueueName, member);
+        rabbitTemplate.convertAndSend("member", member);
         return new DefaultResponse(member.toString());
     }
 }
